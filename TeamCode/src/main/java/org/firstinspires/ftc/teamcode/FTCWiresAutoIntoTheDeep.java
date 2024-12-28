@@ -95,17 +95,20 @@ public class FTCWiresAutoIntoTheDeep extends LinearOpMode {
     public void runAutonoumousMode() {
         //Initialize Pose2d as desired
         Pose2d initPose = new Pose2d(0, 0, Math.toRadians(0)); // Starting Pose
-        Pose2d submersibleSpecimen = new Pose2d(1,0,Math.toRadians(0) );
-        Pose2d netZone = new Pose2d(2,0,Math.toRadians(0));
-        Pose2d yellowSampleOne = new Pose2d(3,0,Math.toRadians(0));
-        Pose2d yellowSampleTwo = new Pose2d(4,0,Math.toRadians(0));
-        Pose2d submersiblePark = new Pose2d(5,0,Math.toRadians(0));
+        Pose2d submersibleSpecimen = new Pose2d(28,-1,Math.toRadians(0) );
+        Pose2d netZone = new Pose2d(9  ,15,Math.toRadians(-45));
+        Pose2d yellowSampleOne = new Pose2d(18,12,Math.toRadians(-14));
+        Pose2d yellowSampleTwo = new Pose2d(18,18,Math.toRadians(1));
+        Pose2d preSubmersiblePark = new Pose2d(58,11,Math.toRadians(0));
+        Pose2d submersiblePark = new Pose2d(59,-15,Math.toRadians(90));
 
 
-        Pose2d observationZone = new Pose2d(6,0,Math.toRadians(0));
-        Pose2d specimenPickup = new Pose2d(7,0,Math.toRadians(0));
-        Pose2d colorSampleOne = new Pose2d(8,0,Math.toRadians(0));
-        Pose2d observationPark = new Pose2d(9,0,Math.toRadians(0));
+        Pose2d observationZone = new Pose2d(8,-37,Math.toRadians(0));
+        Pose2d specimenPickup = new Pose2d(3,-30,Math.toRadians(0));
+        Pose2d preColorSampleOne = new Pose2d(28,-27,Math.toRadians(0));
+        Pose2d prePushColorSampleOne = new Pose2d(51,-27,Math.toRadians(0));
+        Pose2d colorSampleOne = new Pose2d(51,-40,Math.toRadians(0));
+        Pose2d observationPark = new Pose2d(5,-30,Math.toRadians(0));
 
         double waitSecondsBeforeDrop = 0;
         MecanumDrive drive = new MecanumDrive(hardwareMap, initPose);
@@ -185,11 +188,21 @@ public class FTCWiresAutoIntoTheDeep extends LinearOpMode {
             //Move robot to submersible parking
             Actions.runBlocking(
                     drive.actionBuilder(netZone)
+                            .strafeToLinearHeading(preSubmersiblePark.position, preSubmersiblePark.heading)
+                            .build());
+            safeWaitSeconds(1);
+            telemetry.addLine("Move robot to preSubmersible parking");
+            telemetry.update();
+            Actions.runBlocking(
+                    drive.actionBuilder(preSubmersiblePark)
                             .strafeToLinearHeading(submersiblePark.position, submersiblePark.heading)
                             .build());
             safeWaitSeconds(1);
-            telemetry.addLine("Move robot to submersible parking");
+            telemetry.addLine("hitting bottom rung");
             telemetry.update();
+            //add code to hit bottom rung
+
+
         } else { // RIGHT
 
             //Move robot with preloaded specimen to submersible to place specimen
@@ -200,52 +213,42 @@ public class FTCWiresAutoIntoTheDeep extends LinearOpMode {
             safeWaitSeconds(1);
             telemetry.addLine("Move robot to submersible to place specimen");
             telemetry.update();
-
-            //Add code to place specimen on chamber and pick up sample
+            //add code to hang specimen
             safeWaitSeconds(1);
-            telemetry.addLine("Place specimen on chamber and pick up sample");
+            telemetry.addLine("Hang specimen");
             telemetry.update();
 
-            //Move robot to observation zone
+
+
+            //Move robot to color sample 1 (pushing - can change for your liking)
             Actions.runBlocking(
                     drive.actionBuilder(submersibleSpecimen)
-                            .strafeToLinearHeading(observationZone.position, observationZone.heading)
+                            .strafeToLinearHeading(preColorSampleOne.position, preColorSampleOne.heading)
                             .build());
             safeWaitSeconds(1);
-            telemetry.addLine("Move robot to observation zone");
+            telemetry.addLine("Move robot to preColor Sample");
             telemetry.update();
-
-            //Add code to drop sample in observation zone
-            safeWaitSeconds(1);
-            telemetry.addLine("Drop sample in observation zone");
-            telemetry.update();
-
-            //Move robot to color sample 1
             Actions.runBlocking(
-                    drive.actionBuilder(observationZone)
+                    drive.actionBuilder(preColorSampleOne)
+                            .strafeToLinearHeading(prePushColorSampleOne.position, prePushColorSampleOne.heading)
+                            .build());
+            safeWaitSeconds(1);
+            telemetry.addLine("Move robot to preColor Sample");
+            telemetry.update();
+            Actions.runBlocking(
+                    drive.actionBuilder(prePushColorSampleOne)
                             .strafeToLinearHeading(colorSampleOne.position, colorSampleOne.heading)
                             .build());
             safeWaitSeconds(1);
-            telemetry.addLine("Move robot to color sample 1");
+            telemetry.addLine("Move robot to Color Sample");
             telemetry.update();
 
-            //Add code to pick up color sample 1
-            safeWaitSeconds(1);
-            telemetry.addLine("Pick up color sample 1");
-            telemetry.update();
-
-            //Move robot to observation zone
             Actions.runBlocking(
                     drive.actionBuilder(colorSampleOne)
                             .strafeToLinearHeading(observationZone.position, observationZone.heading)
                             .build());
             safeWaitSeconds(1);
-            telemetry.addLine("Move robot to observation zone");
-            telemetry.update();
-
-            //Add code to drop observation zone
-            safeWaitSeconds(1);
-            telemetry.addLine("Drop observation zone");
+            telemetry.addLine("Move robot and pushing sample to observation zone");
             telemetry.update();
 
             //Move robot to pickup specimen
@@ -254,13 +257,40 @@ public class FTCWiresAutoIntoTheDeep extends LinearOpMode {
                             .strafeToLinearHeading(specimenPickup.position, specimenPickup.heading)
                             .build());
             safeWaitSeconds(1);
-            telemetry.addLine("Move robot to pickup specimen");
+            telemetry.addLine("Move robot specimen pickup ");
             telemetry.update();
-
-            //Add code to pick up specimen
+            //add code to pick up specimen
             safeWaitSeconds(1);
             telemetry.addLine("Pick up specimen");
             telemetry.update();
+
+            //Move robot to  submersible specimen
+            Actions.runBlocking(
+                    drive.actionBuilder(specimenPickup)
+                            .strafeToLinearHeading(submersibleSpecimen.position, submersibleSpecimen.heading)
+                            .build());
+            safeWaitSeconds(1);
+            telemetry.addLine("Move robot to submersible specimen");
+            telemetry.update();
+            //add code to hang specimen
+            safeWaitSeconds(1);
+            telemetry.addLine("Hang specimen");
+            telemetry.update();
+
+            //Move robot to pickup specimen
+            Actions.runBlocking(
+                    drive.actionBuilder(submersibleSpecimen)
+                            .strafeToLinearHeading(specimenPickup.position, specimenPickup.heading)
+                            .build());
+            safeWaitSeconds(1);
+            telemetry.addLine("Move robot specimen pickup ");
+            telemetry.update();
+            //add code to pick up specimen
+            safeWaitSeconds(1);
+            telemetry.addLine("Pick up specimen");
+            telemetry.update();
+
+
 
             //Move robot to submersible
             Actions.runBlocking(
@@ -271,10 +301,11 @@ public class FTCWiresAutoIntoTheDeep extends LinearOpMode {
             telemetry.addLine("Move robot to submersible");
             telemetry.update();
 
-            //Add code to place sample on chamber and pickup sample
+            //add code to hang specimen
             safeWaitSeconds(1);
-            telemetry.addLine("place sample on chamber and pickup sample");
+            telemetry.addLine("Hang specimen");
             telemetry.update();
+
 
             //Move robot to observation parking
             Actions.runBlocking(

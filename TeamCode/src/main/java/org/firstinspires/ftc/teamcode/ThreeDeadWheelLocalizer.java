@@ -21,9 +21,9 @@ import org.firstinspires.ftc.teamcode.messages.ThreeDeadWheelInputsMessage;
 public final class ThreeDeadWheelLocalizer implements Localizer {
     public static class Params {
         //TODO Step 11.1 : Update values of par0YTicks, part1YTicks, perpXTicks from AngularRampLogger
-        public double par0YTicks = -2395.6454487379237; // y position of the first parallel encoder (in tick units)
-        public double par1YTicks = 2358.618576001469; // y position of the second parallel encoder (in tick units)
-        public double perpXTicks = 1967.7365728144478; // x position of the perpendicular encoder (in tick units)
+        public double par0YTicks = 0.0; // y position of the first parallel encoder (in tick units)
+        public double par1YTicks = 1.0; // y position of the second parallel encoder (in tick units)
+        public double perpXTicks = 0.0; // x position of the perpendicular encoder (in tick units)
     }
 
     public static Params PARAMS = new Params();
@@ -39,15 +39,16 @@ public final class ThreeDeadWheelLocalizer implements Localizer {
         //TODO Step 3.1 : Update hardware configuration names for dead wheel encoders
         // TODO: make sure your config has **motors** with these names (or change them)
         //   the encoders should be plugged into the slot matching the named motor
+        //   Recommend to use Port 0 and 3 on Robot Controller and Expansion Hub to plug in drive motors and dead wheel encoders
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
         par0 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "leftFront_par0")));
         par1 = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "rightFront_par1")));
         perp = new OverflowEncoder(new RawEncoder(hardwareMap.get(DcMotorEx.class, "rightBack_perp")));
 
-        // TODO: reverse encoder directions if needed
+        // TODO Step 4.3: Run DeadWheelDirectionDebugger and reverse encoder directions if needed
         //   par0.setDirection(DcMotorSimple.Direction.REVERSE);
-        perp.setDirection(DcMotorSimple.Direction.REVERSE);
-        par1.setDirection(DcMotorSimple.Direction.REVERSE);
+        //   perp.setDirection(DcMotorSimple.Direction.REVERSE);
+        //   par1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.inPerTick = inPerTick;
 

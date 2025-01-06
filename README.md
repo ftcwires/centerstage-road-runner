@@ -1,4 +1,2 @@
-# Road Runner Quickstart
-
-Check out the [docs](https://rr.brott.dev/docs/v1-0/tuning/).
-
+#FTC WIRES Autonomous based on Road Runner 1.14
+For instructions and documentation, please register at https://forms.gle/mBFYMgsE5pH3QBXa9 For details, check out http://www.ftcwires.org/softwareplatform

@@ -93,7 +93,7 @@ public class FTCWiresAutoIntoTheDeep extends LinearOpMode {
     }   // end runOpMode()
 
     public void runAutonoumousMode() {
-        //Initialize Pose2d as desired
+        //Auto Left Positions - Samples
         Pose2d initPose = new Pose2d(0, 0, Math.toRadians(0)); // Starting Pose
         Pose2d submersibleSpecimen = new Pose2d(28,-1,Math.toRadians(0) );
         Pose2d netZone = new Pose2d(9  ,15,Math.toRadians(-45));
@@ -102,7 +102,7 @@ public class FTCWiresAutoIntoTheDeep extends LinearOpMode {
         Pose2d preSubmersiblePark = new Pose2d(58,11,Math.toRadians(0));
         Pose2d submersiblePark = new Pose2d(59,-15,Math.toRadians(90));
 
-
+        //Auto Right Positions - Specimens
         Pose2d observationZone = new Pose2d(8,-37,Math.toRadians(0));
         Pose2d specimenPickup = new Pose2d(3,-30,Math.toRadians(0));
         Pose2d preColorSampleOne = new Pose2d(28,-27,Math.toRadians(0));
